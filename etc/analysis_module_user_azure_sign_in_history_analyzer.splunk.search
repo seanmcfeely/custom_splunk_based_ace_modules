@@ -1,0 +1,23 @@
+index=azure* <O_TIMESPEC> <O_VALUE> sourcetype="mscs:azure:eventhub" "Sign-in activity"
+| search body.records.category="SignInLogs" AND body.records.properties.userPrincipalName="<O_VALUE>"
+| rename body.records.properties.userPrincipalName as userPrincipalName
+| rename body.records.identity as DisplayName
+| rename body.records.properties.appDisplayName as ApplicationName
+| rename body.records.callerIpAddress as SourceIpAddress
+| rename body.records.time as Timestamp
+| rename body.records.properties.authenticationRequirement as Authentication_Requirement
+| rename body.records.properties.clientAppUsed as clientAppUsed
+| rename body.records.properties.conditionalAccessStatus as conditionalAccessStatus
+| rename body.records.properties.status.additionalDetails as Status_Detail
+| rename body.records.properties.status.failureReason as Authentication_Failure_Reason
+| rename body.records.properties.riskDetail as RiskDetail
+| rename body.records.properties.riskEventTypes_v2{} as RiskyEventType
+| rename body.records.properties.riskState as RiskState
+| rename body.records.properties.deviceDetail.browser as Browser
+| rename body.records.properties.deviceDetail.operatingSystem as OperatingSystem
+| rename body.records.properties.deviceDetail.displayName as DeviceName
+| rename body.records.properties.userAgent as UserAgent
+| rename body.records.properties.location.city as City
+| rename body.records.properties.location.state as State
+| rename body.records.properties.location.countryOrRegion as Country
+| fields *
